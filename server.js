@@ -10,7 +10,7 @@ const cors = require('cors');
 
 app.use(
     cors({
-      origin: "https://gym-ms-frontend-lime.vercel.app", // Allow frontend URL
+      origin: "https://gym-dashboard-site.netlify.app/", // Allow frontend URL
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
       credentials: true, // Allow cookies & authentication headers
     })
