@@ -1,0 +1,40 @@
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 4080;
+
+const dotenv = require('dotenv').config();
+const connectDB = require('./config/db');
+connectDB();
+
+const cors = require('cors');
+
+app.use(
+    cors({
+      origin: "https://gym-ms-frontend-lime.vercel.app", // Allow frontend URL
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+      credentials: true, // Allow cookies & authentication headers
+    })
+  );
+
+
+app.use(express.json());
+
+const dataFormRoute = require('./routes/dataFormRoutes');
+app.use('/', cors(),dataFormRoute);
+
+const paymentRoute = require('./routes/paymentRoute');
+app.use('/', cors(), paymentRoute);
+
+app.options('*', cors());  // This handles the preflight requests
+
+
+app.get('/', (req, res) => {
+    return res.status(200).send({
+        status: true,
+        message: 'Gym Server is running',
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server Running on port ${PORT}`);
+});
