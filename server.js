@@ -17,17 +17,17 @@ app.use(
     })
   );
 
-  app.options("*", cors());
+app.options("*", cors());
 
 
 
 app.use(express.json());
 
 const dataFormRoute = require('./routes/dataFormRoutes');
-app.use('/', cors(),dataFormRoute);
+app.use('/',dataFormRoute);
 
 const paymentRoute = require('./routes/paymentRoute');
-app.use('/', cors(), paymentRoute);
+app.use('/', paymentRoute);
 
 app.options('*', cors());  // This handles the preflight requests
 
