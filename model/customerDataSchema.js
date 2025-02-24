@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 // Define the Customer schema
 const customerSchema = new mongoose.Schema(
   {
+    customerId: {
+      type:String,
+      required:[true,"Customer Id is required"], 
+      unique:true,
+      index:true
+    },
     // Compulsory fields
     name: {
       type: String,
@@ -105,25 +111,3 @@ const customerData = mongoose.model("Customer", customerSchema);
 
 module.exports = customerData;
 
-
-
-const generateCustomerId = async () => { // Add async
-  const prefix = "CFC";
-  try {
-    // Fetch the latest customer with the highest customerId
-    const lastCustomer = await customerData.findOne().sort({ customerId: -1 }); // Add await
-
-    // Extract the numeric part from the customerId
-    let lastId = 0;
-    if (lastCustomer && lastCustomer.customerId) {
-      const numericPart = lastCustomer.customerId.replace(prefix, "");
-      lastId = parseInt(numericPart, 10) || 0; // Handle invalid numbers
-    }
-
-    // Generate new sequential ID
-    return `${prefix}${String(lastId + 1).padStart(3, "0")}`;
-  } catch (error) {
-    console.error("Error generating customer ID:", error);
-    throw error; // Re-throw for error handling
-  }
-};
