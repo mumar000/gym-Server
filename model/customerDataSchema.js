@@ -62,8 +62,7 @@ const customerSchema = new mongoose.Schema(
       {
         month: {
           type:String,
-          enum:["January","February","March","April","May","June","July","August","September","October","November","December"],
-          required:true
+          required:false
         },
         amount: {
           type:Number,
@@ -74,9 +73,11 @@ const customerSchema = new mongoose.Schema(
           default:Date.now,
         }
       }
-    ]
-   
-
+    ],
+    attendance: {
+      type:Date,
+      default:Date.now()
+    }
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
@@ -103,3 +104,26 @@ customerSchema.pre("save", function(next) {
 const customerData = mongoose.model("Customer", customerSchema);
 
 module.exports = customerData;
+
+
+
+const generateCustomerId = async () => { // Add async
+  const prefix = "CFC";
+  try {
+    // Fetch the latest customer with the highest customerId
+    const lastCustomer = await customerData.findOne().sort({ customerId: -1 }); // Add await
+
+    // Extract the numeric part from the customerId
+    let lastId = 0;
+    if (lastCustomer && lastCustomer.customerId) {
+      const numericPart = lastCustomer.customerId.replace(prefix, "");
+      lastId = parseInt(numericPart, 10) || 0; // Handle invalid numbers
+    }
+
+    // Generate new sequential ID
+    return `${prefix}${String(lastId + 1).padStart(3, "0")}`;
+  } catch (error) {
+    console.error("Error generating customer ID:", error);
+    throw error; // Re-throw for error handling
+  }
+};

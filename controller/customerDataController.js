@@ -34,8 +34,30 @@ const createCustomerData = async (req, res) => {
         });
     }
 
+    const generateCustomerId = () => {
+        const prefix = "CFC"; 
+
+        try {
+            //Fetch the latest customer with the highest customerId 
+            const lastCustomer =  customerData.findOne().sort({ customerId: -1 }) 
+            let lastId = 0;
+            if (lastCustomer && lastCustomer.customerId) {
+                const numericPart = lastCustomer.customerId.replace(prefix, "");
+                lastId = parseInt(numericPart, 10) || 0; //Handle invalid number
+            }
+
+            //generate a new sequential id
+            return `${prefix}${String(lastId + 1).padStart(3, "0")}`
+        } catch (error) {
+            console.error("Error generating customer Id", error);
+            throw error; // Re throw for error handling
+        }
+    }
+
+    const customerId = generateCustomerId()
+
     // Save customer data
-    const customerFields = new customerData({ name, fatherName, contact, address, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate });
+    const customerFields = new customerData({ customerId, name, fatherName, contact, address, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate });
 
     customerFields.save()
         .then((savedData) => {
