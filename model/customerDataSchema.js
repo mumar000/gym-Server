@@ -58,7 +58,8 @@ const customerSchema = new mongoose.Schema(
     // Paid/Unpaid status
     paymentStatus: {
       type: String,
-      enum: ["paid", "unpaid","pending"], // Only allows "paid" or "unpaid"
+      enum: ["paid", "unpaid","pending"],
+      default:"paid" // Only allows "paid" or "unpaid"
     },
     lastPaymentDate: {
       type:Date,
