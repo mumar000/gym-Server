@@ -5,3 +5,5 @@ const { markAttendance, getAttendance } = require('../controller/attendanceDataC
 
 router.post('/markAttendance', markAttendance)
 router.get('/getAttendance/:customerId', getAttendance)
+
+module.exports = router

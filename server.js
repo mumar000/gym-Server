@@ -19,8 +19,6 @@ app.use(
 
 app.options("*", cors());
 
-
-
 app.use(express.json());
 
 const dataFormRoute = require('./routes/dataFormRoutes');
