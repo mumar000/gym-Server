@@ -29,6 +29,9 @@ app.use('/',dataFormRoute);
 const paymentRoute = require('./routes/paymentRoute');
 app.use('/', paymentRoute);
 
+const attendanceRoutes = require('./routes/attendanceRoutes')
+app.use('/',attendanceRoutes)
+
 app.options('*', cors());  // This handles the preflight requests
 
 
