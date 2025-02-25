@@ -34,7 +34,7 @@ const createCustomerData = async (req, res) => {
         });
     }
 
-    const generateCustomerId = async () => {
+    const generateCustomerId =  () => {
         const prefix = "CFC";
         const randomString = Math.random().toString(36).substring(2,8).toUpperCase()
         return `${prefix}${randomString}`
