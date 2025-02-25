@@ -34,25 +34,11 @@ const createCustomerData = async (req, res) => {
         });
     }
 
-    const generateCustomerId = () => {
-        const prefix = "CFC"; 
-
-        try {
-            //Fetch the latest customer with the highest customerId 
-            const lastCustomer =  customerData.findOne().sort({ customerId: -1 }) 
-            let lastId = 0;
-            if (lastCustomer && lastCustomer.customerId) {
-                const numericPart = lastCustomer.customerId.replace(prefix, "");
-                lastId = parseInt(numericPart, 10) || 0; //Handle invalid number
-            }
-
-            //generate a new sequential id
-            return `${prefix}${String(lastId + 1).padStart(3, "0")}`
-        } catch (error) {
-            console.error("Error generating customer Id", error);
-            throw error; // Re throw for error handling
-        }
-    }
+    const generateCustomerId = async () => {
+        const prefix = "CFC";
+        const randomString = Math.random().toString(36).substring(2,8).toUpperCase()
+        return `${prefix}${randomString}`
+      };
 
     const customerId = generateCustomerId()
 
