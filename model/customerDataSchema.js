@@ -59,7 +59,6 @@ const customerSchema = new mongoose.Schema(
     paymentStatus: {
       type: String,
       enum: ["paid", "unpaid","pending"], // Only allows "paid" or "unpaid"
-      default: "paid", // Default status is "unpaid"
     },
     lastPaymentDate: {
       type:Date,
@@ -90,21 +89,23 @@ const customerSchema = new mongoose.Schema(
   }
 );
 
-customerSchema.pre("save", function(next) {
-  if(this.lastPaymentDate) {
-    const paymentDate = new Date(this.lastPaymentDate)
-    const currentDate = new Date();
-    const timeDifference = currentDate - paymentDate  //Difference in milisecond
-    const daysInDifference = timeDifference / (1000 * 60 * 60 * 24) //Convert to days
-  
+customerSchema.pre("save", function (next) {
+  if (this.isModified("paymentStatus") && this.paymentStatus === "paid") {
+    // Schedule a task to update paymentStatus after 2 minutes (for testing)
+    // const timeUntilUnpaid = 2 * 60 * 1000; // 2 minutes (for testing)
+    const timeUntilUnpaid = 30 * 24 * 60 * 60 * 1000; // 30 days (for production)
 
-  //Update paymentStatus based on the 30 day rule
-  this.paymentStatus = daysInDifference <= 30 ? "paid" : "pending" ;
-  } else {
-    this.paymentStatus = "unpaid"
+    setTimeout(async () => {
+      const customer = await this.constructor.findById(this._id);
+      if (customer && customer.paymentStatus === "paid") {
+        customer.paymentStatus = "unpaid";
+        await customer.save();
+        console.log(`Payment status updated to "unpaid" for customer ${customer._id}`);
+      }
+    }, timeUntilUnpaid);
   }
   next();
-})
+});
 
 // Create the Customer model
 const customerData = mongoose.model("Customer", customerSchema);
