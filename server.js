@@ -10,7 +10,9 @@ const cors = require('cors');
 
 app.use(
     cors({
-      origin: "https://gym-dashboard-site.netlify.app", // Allow frontend URL
+      origin: ["https://gym-dashboard-site.netlify.app",
+                'http://localhost:5173'
+      ], // Allow frontend URL
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true, // Allow cookies & authentication headers
