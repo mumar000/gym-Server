@@ -80,10 +80,11 @@ const customerSchema = new mongoose.Schema(
         }
       }
     ],
-    attendance: {
-      type:Date,
-      default:Date.now()
-    }
+    attendance: [{
+        type:Date,
+        default:Date.now()
+    }]
+    
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

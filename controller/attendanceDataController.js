@@ -9,7 +9,8 @@ exports.markAttendance = async (req,res) => {
                 message:'Please enter valid Id'
             })
         }
-        customer.attendance.push({date: new Date()});
+        console.log(customer)
+        customer.attendance.push(new Date());
         await customer.save();
         res.status(200).send({
             status:true,
