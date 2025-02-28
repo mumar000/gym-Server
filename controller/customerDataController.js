@@ -24,10 +24,10 @@ const getCustomerData = async (req, res) => {
 //@route POST /customerData
 //@access Private
 const createCustomerData = async (req, res) => {
-    const { name, fatherName, contact, address, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate } = req.body;
+    const { name, fatherName, contact, address, weight, cardio, age, gender, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate } = req.body;
 
     // Validate required fields
-    if (!name || !fatherName || !contact || !address || !monthlyFee || !admissionFee || !paymentStatus || !date ) {
+    if (!name || !fatherName || !contact || !address || !monthlyFee || !admissionFee || !paymentStatus || !date || !gender ) {
         return res.status(400).send({
             status: false,
             message: 'Please fill all required fields'
@@ -43,7 +43,7 @@ const createCustomerData = async (req, res) => {
     const customerId = generateCustomerId()
 
     // Save customer data
-    const customerFields = new customerData({ customerId, name, fatherName, contact, address, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate });
+    const customerFields = new customerData({ customerId, name, fatherName, contact, address,age,gender, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate });
 
     customerFields.save()
         .then((savedData) => {

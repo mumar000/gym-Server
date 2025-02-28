@@ -31,6 +31,14 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    age: {
+      type:Number,
+      required:false,
+    },
+    gender: {
+      type:String,
+      required:true
+    },
     weight: {
       type: Number,
       required: false,
@@ -59,7 +67,6 @@ const customerSchema = new mongoose.Schema(
     paymentStatus: {
       type: String,
       enum: ["paid", "unpaid","pending"],
-      default:"paid" // Only allows "paid" or "unpaid"
     },
     lastPaymentDate: {
       type:Date,
