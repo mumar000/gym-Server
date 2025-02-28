@@ -2,9 +2,9 @@ const customerData = require('../model/customerDataSchema');
 
 const updatePaymentRequest = (req,res) => {
     const { id } = req.params;
-    const { month, amount, paymentDate } = req.body
+    const { reciever, amount, paymentDate } = req.body
 
-    if(!month || !amount  ) {
+    if(!reciever || !amount  ) {
         return res.status(500).json({status:false, message:'Please enter valid fields'})
     }
 
@@ -17,7 +17,7 @@ const updatePaymentRequest = (req,res) => {
     
 
     customer.paymentHistory.push({
-        month,
+        reciever,
         amount,
         paymentDate: paymentDate || Date.now(),
     })

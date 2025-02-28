@@ -73,7 +73,7 @@ const customerSchema = new mongoose.Schema(
     },
     paymentHistory: [
       {
-        month: {
+        reciever: {
           type:String,
           required:false
         },
