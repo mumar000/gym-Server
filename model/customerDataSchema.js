@@ -98,23 +98,7 @@ const customerSchema = new mongoose.Schema(
   }
 );
 
-// customerSchema.pre("save", function (next) {
-//   if (this.isModified("paymentStatus") && this.paymentStatus === "paid") {
-//     // Schedule a task to update paymentStatus after 2 minutes (for testing)
-//     // const timeUntilUnpaid = 2 * 60 * 1000; // 2 minutes (for testing)
-//     const timeUntilUnpaid = 30 * 24 * 60 * 60 * 1000; // 30 days (for production)
 
-//     setTimeout(async () => {
-//       const customer = await this.constructor.findById(this._id);
-//       if (customer && customer.paymentStatus === "paid") {
-//         customer.paymentStatus = "unpaid";
-//         await customer.save();
-//         console.log(`Payment status updated to "unpaid" for customer ${customer._id}`);
-//       }
-//     }, timeUntilUnpaid);
-//   }
-//   next();
-// });
 
 // Create the Customer model
 const customerData = mongoose.model("Customer", customerSchema);
