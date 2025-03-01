@@ -9,7 +9,23 @@ exports.markAttendance = async (req,res) => {
                 message:'Please enter valid Id'
             })
         }
-        customer.attendance.push(new Date());
+        const now = new Date();
+
+        //check if the customer has already marked attendance in the last 24hour
+        const lastAttendance = customer.attendance[customer.attendance.length - 1]
+        if (lastAttendance) {
+            const timeDiff = now - lastAttendance;
+            const hoursDiff = timeDiff / (1000 * 60 * 60 )
+
+            if(hoursDiff < 24) {
+                return res.status(400).send({
+                    status:false, 
+                    message:'Already Mark Attendance before'})
+            }
+        }
+
+        customer.attendance.push(now)
+        // customer.attendance.push(new Date());
         await customer.save();
         res.status(200).send({
             status:true,

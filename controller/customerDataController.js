@@ -43,7 +43,14 @@ const createCustomerData = async (req, res) => {
     const customerId = generateCustomerId()
 
     // Save customer data
-    const customerFields = new customerData({ customerId, name, fatherName, contact, address,age,gender, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate });
+    const customerFields = new customerData({ customerId, name, fatherName, contact, address,age,gender, weight, cardio, locker, monthlyFee, date, admissionFee, paymentStatus, lastPaymentDate, paymentHistory: [
+        {
+        reciever:"Admin",
+        paymentDate: new Date(),
+        amount:monthlyFee
+        }
+    ] 
+});
 
     customerFields.save()
         .then((savedData) => {

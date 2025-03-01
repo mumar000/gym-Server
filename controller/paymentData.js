@@ -4,7 +4,7 @@ const updatePaymentRequest = (req,res) => {
     const { id } = req.params;
     const { reciever, amount, paymentDate } = req.body
 
-    if(!reciever || !amount  ) {
+    if( !reciever || !amount  ) {
         return res.status(500).json({status:false, message:'Please enter valid fields'})
     }
 
@@ -15,7 +15,6 @@ const updatePaymentRequest = (req,res) => {
             return res.status(400).json({status:false, message:'Unable to find data'})
         }
     
-
     customer.paymentHistory.push({
         reciever,
         amount,
