@@ -10,8 +10,10 @@ exports.markAttendance = async (req,res) => {
             })
         }
         const now = new Date();
+        //Convert UTC time into Local Time
+        const localTime = new Date(now.getTime() + 5 * 60 * 60 * 1000)
 
-        //check if the customer has already marked attendance in the last 24hour
+        // check if the customer has already marked attendance in the last 24hour
         const lastAttendance = customer.attendance[customer.attendance.length - 1]
         if (lastAttendance) {
             const timeDiff = now - lastAttendance;
@@ -24,7 +26,7 @@ exports.markAttendance = async (req,res) => {
             }
         }
 
-        customer.attendance.push(now)
+        customer.attendance.push(localTime)
         // customer.attendance.push(new Date());
         await customer.save();
         res.status(200).send({
@@ -52,3 +54,6 @@ exports.getAttendance = async (req, res) => {
         console.log("Error geting customer attendance",error)
     }
 }
+
+
+

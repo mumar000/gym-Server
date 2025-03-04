@@ -29,7 +29,7 @@ const customerSchema = new mongoose.Schema(
     // Optional fields
     address: {
       type: String,
-      required: true,
+      required: false,
     },
     age: {
       type:Number,
@@ -97,8 +97,6 @@ const customerSchema = new mongoose.Schema(
     timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
-
-
 
 // Create the Customer model
 const customerData = mongoose.model("Customer", customerSchema);
