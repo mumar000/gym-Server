@@ -5,7 +5,7 @@ const customerData = require('../model/customerDataSchema');
 //@access Private
 const getCustomerData = async (req, res) => {
     try {
-        const customers = await customerData.find().limit(50); // Limit results to prevent large payload
+        const customers = await customerData.find().limit(500); // Limit results to prevent large payload
         return res.status(200).json({
             status: true,
             message: 'Data of the Clients',
@@ -36,8 +36,8 @@ const createCustomerData = async (req, res) => {
 
     const generateCustomerId =  () => {
         const prefix = "CFC";
-        const randomString = Math.random().toString(36).substring(2,8).toUpperCase()
-        return `${prefix}${randomString}`
+        counter = 1 
+        return `${prefix}${counter++}`
       };
 
     const customerId = generateCustomerId()
