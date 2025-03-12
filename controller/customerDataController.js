@@ -33,11 +33,12 @@ const createCustomerData = async (req, res) => {
             message: 'Please fill all required fields'
         });
     }
-
+    
+    
     const generateCustomerId =  () => {
         const prefix = "CFC";
-        counter = 1 
-        return `${prefix}${counter++}`
+        const randomNum = Math.floor(Math.random() * 10)
+        return `${prefix}${randomNum}`
       };
 
     const customerId = generateCustomerId()
