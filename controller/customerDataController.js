@@ -37,7 +37,7 @@ const createCustomerData = async (req, res) => {
     
     const generateCustomerId =  () => {
         const prefix = "CFC";
-        const randomNum = Math.floor(Math.random() * 10)
+        const randomNum = Math.floor(Math.random() * 2000)
         return `${prefix}${randomNum}`
       };
 
