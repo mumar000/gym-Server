@@ -63,6 +63,10 @@ const customerSchema = new mongoose.Schema(
         required: [true, "Monthly fee is required"],
         min: [0, "Monthly fee cannot be negative"],
     },
+    time:{
+      type:String,
+      required:false
+    },
     // Paid/Unpaid status
     paymentStatus: {
       type: String,
